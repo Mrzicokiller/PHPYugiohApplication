@@ -4,13 +4,13 @@
     <h1>Welcome to the Yu-Gi-Oh! collection tracker</h1>
     <div class='row justify-content-start'>
         <div class='col-12'>
-            <a href='/card/addForm' class='btn btn-primary'>Add card</a>
+            <a href='/card/overview' class='btn btn-primary'>Return to overview</a>
         </div>
     </div>
     <hr>
     <div class='row'>
         <div class='col-12 justify-content-start'>
-            <table class='col-12 table table-dark'>
+            <table class='col-12 table table-dark table-bordered'>
                 <thead>
                     <tr>
                         <th>Card name</th>
@@ -20,10 +20,10 @@
                         <th>Defence Value</th>
                         <th>Card Description</th>
                         <th>Card collection code</th>
+                        <th>Card Image</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for card in registeredCards %}
                     <tr>
                         <td>{{card.cardName}}</td>
                         <td>{{card.type}}</td>
@@ -32,9 +32,8 @@
                         <td>{{card.defenceValue}}</td>
                         <td>{{card.cardDescription}}</td>
                         <td>{{card.collectionID}}</td>
-                        <td><a href='/card/detail/{{card.id}}' class="btn btn-primary">Details</a></td>
+                        <td>{% if card.imgPath %}<img src="{{ asset('uploads/') ~ card.imgPath }}" alt='img of the card {{card.cardName}}'> {% else %} No image available {% endif %}</td>
                     </tr>
-                {% endfor %}
                 </tbody>
             </table>
         </div>
