@@ -4,11 +4,12 @@ namespace App\Controller;
 use App\Entity\Card;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\ORMException;
 
 class YugiohCardController extends AbstractController
 {
@@ -27,6 +28,39 @@ class YugiohCardController extends AbstractController
     }
 
     /**
+     * @Route("/card/detail/{id}", methods={"GET"})
+     */
+    public function YugiohCardDetail(int $id): Response
+    {
+        //check if id is an int
+        if(is_int($id))
+        {
+            //get data from card table with specific id
+            $card = $this->getDoctrine()->getRepository(Card::class)->find($id);
+
+            if($card !== null)
+            {
+                return $this->render('cardDetails.html.twig', [
+                    'card' => $card
+                ]); 
+            }
+            else
+            {
+                $response = new Response();
+                $response->setContent('No matching ID found');
+                return $response;
+            }       
+            
+        }
+        else
+        {
+            $response = new Response();
+            $response->setContent('Invalid ID');
+            return $response;
+        }
+    }
+
+    /**
      * @Route("/card/addForm")
      */
     public function YugiohCardAddForm() : Response
@@ -39,10 +73,9 @@ class YugiohCardController extends AbstractController
      * @Route("/cardAdd/post", methods={"POST"})
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param LoggerInterface $logger
      * @return Response
      */
-    public function YugiohCardAddPost(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger) : Response
+    public function YugiohCardAddPost(Request $request, EntityManagerInterface $entityManager) : Response
     {
         //get form data from the request
         $cardInformation = $request->request;
@@ -62,6 +95,7 @@ class YugiohCardController extends AbstractController
             return $response;
         }
 
+        //get the uploaded file and check if the file is really and image
         $uploadedImage = $request->files->get('cardImage');
         if($this->isUploadedFileAnImage($uploadedImage))
         {
