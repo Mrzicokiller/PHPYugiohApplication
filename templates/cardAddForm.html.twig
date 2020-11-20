@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class='container-fluid'>
+    <h1>Add a card to your collection</h1>
+    <hr>
+    <div class='row'>
+        <div class='col-12 justify-content-start'>
+            <form method="post" action="/cardAdd/post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="cardName">Card name</label>
+                    <input type="text" class="form-control" id="cardName" name="cardName" placeholder="Dark Magician" alt="A inputfield for the card name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardType">Card Type</label>
+                    <input type="text" class="form-control" id="cardType" name="cardType" placeholder="Spellcaster, Continuous spell, Counter trap" alt="A inputfield for the card type" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardAttribute">Card Attribute</label>
+                    <input type="text" class="form-control" id="cardAttribute" name="cardAttribute" placeholder="Dark, Light, Spell, Trap" alt="A inputfield for the card Attribute">
+                </div>
+                <div class="form-group">
+                    <label for="cardAttackValue">Card Attack Value (Only applies for monster cards)</label>
+                    <input type="text" class="form-control" id="cardAttackValue" name="cardAttackValue" placeholder="2500" alt="A inputfield for the card Attack value if possible">
+                </div>
+                <div class="form-group">
+                    <label for="cardDefenceValue">Card Defence Value (Only applies for monster cards)</label>
+                    <input type="text" class="form-control" id="cardDefenceValue" name="cardDefenceValue" placeholder="2000" alt="A inputfield for the card Defence value if possible">
+                </div>
+                <div class="form-group">
+                    <label for="cardDescription">Card Descriptiom (The flavour text or effect on the card)</label>
+                    <input type="text" class="form-control" id="cardDescription" name="cardDescription" placeholder="The ultimate wizard in terms of attack and defense." alt="A inputfield for the card Description(flavour text or effect)">
+                </div>
+                <div class="form-group">
+                    <label for="cardCollectionID">Card Collection Code</label>
+                    <input type="text" class="form-control" id="cardCollectionID" name="cardCollectionID" placeholder="SYE-001" alt="A inputfield for the card Collection Code" required>
+                </div>
+                <div class="form-group">
+                    <label for="CardImage">Card Image</label>
+                    <input type="file" class="form-control-file" id="cardImage" name="cardImage"  accept="image/*">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Add">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

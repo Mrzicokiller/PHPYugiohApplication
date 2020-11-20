@@ -41,7 +41,7 @@ class Card
     /**
      * @ORM\Column(type="string", length=4, nullable=true)
      */
-    private $defenseValue;
+    private $defenceValue;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -111,14 +111,14 @@ class Card
         return $this;
     }
 
-    public function getDefenseValue(): ?string
+    public function getDefenceValue(): ?string
     {
-        return $this->defenseValue;
+        return $this->defenceValue;
     }
 
-    public function setDefenseValue(?string $defenseValue): self
+    public function setDefenceValue(?string $defenceValue): self
     {
-        $this->defenseValue = $defenseValue;
+        $this->defenceValue = $defenceValue;
 
         return $this;
     }

@@ -4,7 +4,7 @@
     <h1>Welcome to the Yu-Gi-Oh! collection tracker</h1>
     <div class='row justify-content-start'>
         <div class='col-12'>
-            <a href='' class='btn btn-primary'>Add card</a>
+            <a href='/card/addForm' class='btn btn-primary'>Add card</a>
         </div>
     </div>
     <hr>
@@ -17,10 +17,9 @@
                         <th>Type</th>
                         <th>Attribute</th>
                         <th>Attack Value</th>
-                        <th>Defense Value</th>
+                        <th>Defence Value</th>
                         <th>Card Description</th>
                         <th>Card collection code</th>
-                        <th>Image</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,10 +29,10 @@
                         <td>{{card.type}}</td>
                         <td>{{card.attribute}}</td>
                         <td>{{card.attackValue}}</td>
-                        <td>{{card.defenseValue}}</td>
+                        <td>{{card.defenceValue}}</td>
                         <td>{{card.cardDescription}}</td>
                         <td>{{card.collectionID}}</td>
-                        <td>{{card.imgPath}}</td>
+                        <td><a href='' class="btn btn-primary">Details</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
