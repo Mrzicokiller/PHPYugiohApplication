@@ -38,6 +38,7 @@ class YugiohCardController extends AbstractController
             //get data from card table with specific id
             $card = $this->getDoctrine()->getRepository(Card::class)->find($id);
 
+            //if the result is not null render the detail page
             if($card !== null)
             {
                 return $this->render('cardDetails.html.twig', [
@@ -89,6 +90,7 @@ class YugiohCardController extends AbstractController
         $newCard->setDefenceValue($cardInformation->get('cardDefenceValue'));
         $newCard->setCardDescription($cardInformation->get('cardDescription'));
         $newCard->setCollectionID($cardInformation->get('cardCollectionID'));
+        //validate the information
         if(!$this->isNewCardInformationValid($newCard)){
             $response = new Response();
             $response->setContent('Card information is invalid');
@@ -99,8 +101,8 @@ class YugiohCardController extends AbstractController
         $uploadedImage = $request->files->get('cardImage');
         if($this->isUploadedFileAnImage($uploadedImage))
         {
+            //clean the image name and save it in public/uploads
             $originalImageName = pathinfo($uploadedImage->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
             $slugger = new AsciiSlugger();
             $safeImageName = $slugger->slug($originalImageName);
             $newImagename = $safeImageName.'-'.uniqid().'.'.$uploadedImage->guessExtension();
@@ -120,6 +122,7 @@ class YugiohCardController extends AbstractController
             return $response;
         }
 
+        //Insert new card data into the card table
         try {
             $entityManager->persist($newCard);
             $entityManager->flush();
@@ -135,6 +138,7 @@ class YugiohCardController extends AbstractController
         
     }
 
+    //card information validator
     private function isNewCardInformationValid(Card $newCard) : bool
     {
         if(is_string($newCard->getCardName()) &&
@@ -153,6 +157,7 @@ class YugiohCardController extends AbstractController
         }
     }
 
+    //uploaded file validator checks if file is an image
     private function isUploadedFileAnImage(object $uploadedImage) : bool
     {
         $imageTypes = array ('image/bmp',
