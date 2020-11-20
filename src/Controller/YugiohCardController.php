@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Entity\CardAttribute;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,12 @@ class YugiohCardController extends AbstractController
      */
     public function YugiohCardOverview(): Response
     {
-        //Get all cards from the table
+        //Get all cards from the table Card
         $registeredCards = $this->getDoctrine()->getRepository(Card::class)->findAll();
 
         //return view for overview of the cards with the data from the database
         return $this->render('cardOverview.html.twig', [
-            'registeredCards' => $registeredCards
+            'registeredCards' => $registeredCards,
         ]);
     }
 
@@ -85,11 +86,15 @@ class YugiohCardController extends AbstractController
         $newCard = new Card();
         $newCard->setCardName($cardInformation->get('cardName'));
         $newCard->setType($cardInformation->get('cardType'));
-        $newCard->setAttribute($cardInformation->get('cardAttribute'));
         $newCard->setAttackValue($cardInformation->get('cardAttackValue'));
         $newCard->setDefenceValue($cardInformation->get('cardDefenceValue'));
         $newCard->setCardDescription($cardInformation->get('cardDescription'));
         $newCard->setCollectionID($cardInformation->get('cardCollectionID'));
+
+        $attribute = $this->getDoctrine()->getRepository(cardAttribute::class)->find($cardInformation->get('cardAttribute'));
+
+        $newCard->setAttribute($attribute);
+
         //validate the information
         if(!$this->isNewCardInformationValid($newCard)){
             $response = new Response();
@@ -143,7 +148,6 @@ class YugiohCardController extends AbstractController
     {
         if(is_string($newCard->getCardName()) &&
            is_string($newCard->getType()) &&
-           is_string($newCard->getAttribute()) &&
            is_string($newCard->getAttackValue()) &&
            is_string($newCard->getDefenceValue()) &&
            is_string($newCard->getCollectionID()) &&

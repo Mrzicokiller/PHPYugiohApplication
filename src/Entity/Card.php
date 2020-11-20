@@ -29,11 +29,6 @@ class Card
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $attribute;
-
-    /**
      * @ORM\Column(type="string", length=4, nullable=true)
      */
     private $attackValue;
@@ -57,6 +52,12 @@ class Card
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $cardDescription;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CardAttribute::class, inversedBy="cards")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Attribute;
 
     public function getId(): ?int
     {
@@ -83,18 +84,6 @@ class Card
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getAttribute(): ?string
-    {
-        return $this->attribute;
-    }
-
-    public function setAttribute(?string $attribute): self
-    {
-        $this->attribute = $attribute;
 
         return $this;
     }
@@ -155,6 +144,18 @@ class Card
     public function setCardDescription(?string $cardDescription): self
     {
         $this->cardDescription = $cardDescription;
+
+        return $this;
+    }
+
+    public function getAttribute(): ?CardAttribute
+    {
+        return $this->Attribute;
+    }
+
+    public function setAttribute(?CardAttribute $Attribute): self
+    {
+        $this->Attribute = $Attribute;
 
         return $this;
     }
