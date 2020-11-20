@@ -27,7 +27,7 @@
                     <tr>
                         <td>{{card.cardName}}</td>
                         <td>{{card.type}}</td>
-                        <td>{{card.attribute}}</td>
+                        <td style="text-align: center"><img src="{{ asset('cardAttributeIMG/') ~ card.attribute.attributeImagePath }}" alt='img of the card {{card.cardName}}'></td>
                         <td>{{card.attackValue}}</td>
                         <td>{{card.defenceValue}}</td>
                         <td>{{card.cardDescription}}</td>
